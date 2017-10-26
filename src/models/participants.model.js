@@ -12,6 +12,8 @@ module.exports = function (app) {
     funFact: { type: String },
     lc: { type: String, required: true },
     role: { type: String, required: true },
+    comingas: { type: String, required: true, 
+      enum: ['delegate', 'faci'], default: 'delegate'},
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });

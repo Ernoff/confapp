@@ -5,8 +5,13 @@
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+
   const participants = new Schema({
-    text: { type: String, required: true },
+    name: { type: String, required: true },
+    funcArea: { type: String },
+    funFact: { type: String },
+    lc: { type: String, required: true },
+    role: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });

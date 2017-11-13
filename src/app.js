@@ -4,6 +4,8 @@ const compress = require('compression');
 const cors = require('cors');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
+const memory = require('feathers-memory');
+const swagger = require('feathers-swagger');
 
 const feathers = require('feathers');
 const configuration = require('feathers-configuration');
@@ -31,6 +33,13 @@ app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
+app.configure(swagger({
+  docsPath: '/docs',
+  info: {
+    title: 'A test',
+    description: 'A description'
+  }
+}))
 // Host the public folder
 app.use('/', feathers.static(app.get('public')));
 

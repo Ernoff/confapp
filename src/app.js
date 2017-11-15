@@ -14,6 +14,9 @@ const socketio = require('feathers-socketio');
 const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
 
+const memory = require('feathers-memory');
+const swagger = require('feathers-swagger');
+
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
@@ -31,6 +34,16 @@ app.use(compress());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
+
+app.configure(swagger({
+  docsPath: '/docs',
+  // uiIndex: path.join(__dirname, 'docs.html'),
+  uiIndex: true,
+  info: {
+    title: 'Conference Participants',
+    description: 'An API that will be used to perform CRUD on participants'
+  }
+}));
 
 // Host the public folder
 app.use('/', feathers.static(app.get('public')));
@@ -50,5 +63,6 @@ app.use(notFound());
 app.use(handler());
 
 app.hooks(appHooks);
+
 
 module.exports = app;

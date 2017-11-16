@@ -41,6 +41,14 @@ app.configure(swagger({
   uiIndex: true,
   info: {
     title: 'Conference Participants',
+    version: '1.0.0',
+    contact: {
+    	email: 'ernest.offiong@gmail.com'
+    },
+    license: {
+    	name: 'APACHE 2.0',
+    	url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    },
     description: 'An API that will be used to perform CRUD on participants'
   }
 }));

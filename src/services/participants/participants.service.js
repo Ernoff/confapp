@@ -20,20 +20,33 @@ module.exports = function () {
   // app.use('/participants', createService(options));
   const participants = createService(options);
   participants.docs = {
-    tags: {
-          summary: 'Retrieves a list of all participants',
-          description: ''
-        },
     find: {
-      produces: [
-        'application/json'
-      ],
       parameters: [
         {
-          description: 'Return all participants',
-          in: 'query'
+          description: 'Get all participants',
+          in: 'query',
+          name: ''
         }
       ]
+    },
+    create: {
+      parameters: [
+        {
+          description: 'Participant Objects that needs to be added to database',
+          in: 'body',
+          name: 'body',
+          required: true,
+          schema : {
+            $ref: "#/definitions/Participants",
+            type: "array"
+          }
+        }
+      ],
+      responses: {
+        201: {
+          description: "Hell yeah its been created"
+        }
+      }
     }
   }
 

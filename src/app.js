@@ -14,7 +14,7 @@ const socketio = require('feathers-socketio');
 const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
 
-const memory = require('feathers-memory');
+// const memory = require('feathers-memory');
 const swagger = require('feathers-swagger');
 
 const middleware = require('./middleware');

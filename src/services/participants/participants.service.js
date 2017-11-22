@@ -20,16 +20,74 @@ module.exports = function () {
   // app.use('/participants', createService(options));
   const participants = createService(options);
   participants.docs = {
+    definitions: {
+      "ApiResponse" : {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "lc": {"type": "string"},
+          "role": { "type": "string"},
+          "comingas": { "type": "string"}
+        }
+      },
+      participants:{
+        "type": "object",
+        "required": [
+          "name", "lc", "role", "comingas"
+        ],
+        "properties":{
+          "name": {
+            "type": "string",
+            "description": "name of the the participants"
+          },
+          "funcArea": {
+            "type":"string",
+            "description": "the functional area they belong to"
+          },
+          "funFact": {
+            "type": "string",
+            "description": "interesting facts about the participants"
+          },
+          "lc": {
+            "type": "string",
+            "description": "The home LC they belong to. Return Nigeria if part of the MC"
+          },
+          "role": {
+            "type": "string",
+            "description": "What do you do in your committee"
+          },
+          "comingas": {
+            "type": "string",
+            "description": "Are you a facilitator or a delegate?",
+            "enum": ["faci", "delegate"]
+          }
+        }
+      }
+    },
     find: {
       parameters: [
         {
           description: 'Get all participants',
           in: 'query',
-          name: ''
+          name: '',
+          // schema : {
+          //   $ref: "#/definitions/participants list",
+          //   type: "array"
+          // }
         }
-      ]
+      ],
+      responses: {
+        200:{
+          description: "successful operation",
+          schema : {
+            $ref: "#/definitions/participants",
+            type: "array"
+          }
+        },
+      }
     },
     create: {
+      produces:["application/json"],
       parameters: [
         {
           description: 'Participant Objects that needs to be added to database',
@@ -37,15 +95,22 @@ module.exports = function () {
           name: 'body',
           required: true,
           schema : {
-            $ref: "#/definitions/Participants",
+            $ref: "#/definitions/participants",
             type: "array"
           }
         }
-      ],
-      responses: {
-        201: {
-          description: "Hell yeah its been created"
-        }
+      ]
+    },
+    "/participants/{lc}": {
+      "get":{
+        parameters : [
+          {
+            description: 'Get all participants', in: 'path',
+            name: 'lc',
+            type: 'string',
+          }
+        ],
+        tags: ["participants"]
       }
     }
   }
